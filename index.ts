@@ -38,7 +38,7 @@ export class Umami {
   send(payload: UmamiPayload, type: 'event' | 'identify' = 'event') {
     const { hostUrl } = this.options;
 
-    return fetch(hostUrl, {
+    return fetch(`${hostUrl}/api/send`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -60,7 +60,7 @@ export class Umami {
           data: eventData,
         });
       case 'object':
-        return this.send(event as UmamiPayload);
+        return this.send({ website: websiteId, ...(event as UmamiPayload) });
     }
 
     return Promise.reject('Invalid payload.');

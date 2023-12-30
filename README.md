@@ -16,5 +16,5 @@ umami.init({
   hostUrl: 'https://umami.mywebsite.com'
 });
 
-umami.track('/home');
+umami.track({ url: '/home' });
 ```
