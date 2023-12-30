@@ -1,4 +1,4 @@
-# umami.js
+# @umami/node
 
 ## Installation
 
