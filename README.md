@@ -18,3 +18,14 @@ umami.init({
 
 umami.track({ url: '/home' });
 ```
+
+The properties you can send using the `.track` function are:
+
+- hostname: Hostname of server
+- language: Client language (eg. en-US)
+- referrer: Page referrer
+- screen: Screen dimensions (eg. 1920x1080)
+- title: Page title
+- url: Page url
+- name: Event name (for custom events)
+- data: Event data properties
