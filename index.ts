@@ -42,7 +42,7 @@ export class Umami {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        'User-Agent': `node/${process.version}`,
+        'User-Agent': `Mozilla/5.0 Node/${process.version}`,
       },
       body: JSON.stringify({ type, payload }),
     });
