@@ -2,10 +2,12 @@ export interface UmamiOptions {
   hostUrl?: string;
   websiteId?: string;
   sessionId?: string;
+  userAgent?: string;
 }
 
 export interface UmamiPayload {
   website: string;
+  session?: string;
   hostname?: string;
   language?: string;
   referrer?: string;
@@ -26,7 +28,7 @@ export class Umami {
   options: UmamiOptions;
   properties: object;
 
-  constructor(options = {}) {
+  constructor(options: UmamiOptions = {}) {
     this.options = options;
     this.properties = {};
   }
@@ -36,13 +38,13 @@ export class Umami {
   }
 
   send(payload: UmamiPayload, type: 'event' | 'identify' = 'event') {
-    const { hostUrl } = this.options;
+    const { hostUrl, userAgent } = this.options;
 
     return fetch(`${hostUrl}/api/send`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        'User-Agent': `Mozilla/5.0 Node/${process.version}`,
+        'User-Agent': userAgent || `Mozilla/5.0 Umami/${process.version}`,
       },
       body: JSON.stringify({ type, payload }),
     });
@@ -68,9 +70,12 @@ export class Umami {
 
   identify(properties: object = {}) {
     this.properties = { ...this.properties, ...properties };
-    const { websiteId } = this.options;
+    const { websiteId, sessionId } = this.options;
 
-    return this.send({ website: websiteId, data: { ...this.properties } }, 'identify');
+    return this.send(
+      { website: websiteId, session: sessionId, data: { ...this.properties } },
+      'identify',
+    );
   }
 
   reset() {
